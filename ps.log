@@ -1,0 +1,32 @@
+UID          PID    PPID  C STIME TTY          TIME CMD
+android+     499       0  0 10:30 pts/0    00:00:00 bash
+android+     834     499  0 11:40 pts/0    00:00:00  \_ ps -ef --forest
+android+       1       0  0 10:26 ?        00:00:00 /bin/bash /home/androidusr/docker-android/mixins/scripts/run.sh
+android+       7       1  0 10:26 ?        00:00:00 /usr/bin/python3 /usr/bin/supervisord --configuration /home/androidusr/docker-android/mixins/configs/process/supervisord-screen.conf
+android+      15       7  0 10:26 ?        00:00:00  \_ /usr/bin/python3 /usr/local/bin/docker-android start display_screen
+android+      39      15  0 10:26 ?        00:00:00  |   \_ /bin/sh -c /usr/bin/Xvfb :0 -screen 0 1600x900x24+32
+android+      40      39  0 10:26 ?        00:00:01  |       \_ /usr/bin/Xvfb :0 -screen 0 1600x900x24+32
+android+      17       7  0 10:26 ?        00:00:00  \_ /usr/bin/python3 /usr/local/bin/docker-android start display_wm
+android+      35      17  0 10:26 ?        00:00:00  |   \_ /bin/sh -c /usr/bin/openbox-session 
+android+      36      35  0 10:26 ?        00:00:00  |       \_ /usr/bin/openbox --startup /usr/lib/x86_64-linux-gnu/openbox-autostart OPENBOX
+android+      20       7  0 10:26 ?        00:00:00  \_ /usr/bin/python3 /usr/local/bin/docker-android start vnc_web
+android+      30      20  0 10:26 ?        00:00:00  |   \_ /bin/sh -c /opt/noVNC/utils/novnc_proxy --vnc localhost:5900 localhost:6080
+android+      33      30  0 10:26 ?        00:00:00  |       \_ bash /opt/noVNC/utils/novnc_proxy --vnc localhost:5900 localhost:6080
+android+      47      33  0 10:26 ?        00:00:00  |           \_ python3 -m websockify --web /opt/noVNC/utils/../ 6080 localhost:5900
+android+     757      47  0 11:17 ?        00:00:00  |               \_ python3 -m websockify --web /opt/noVNC/utils/../ 6080 localhost:5900
+android+      93       7  0 10:26 ?        00:00:00  \_ /usr/bin/python3 /usr/local/bin/docker-android start vnc_server
+android+      95      93  0 10:26 ?        00:00:00      \_ /bin/sh -c /usr/bin/x11vnc -display :0 -forever -shared -nopw
+android+      96      95  0 10:26 ?        00:00:02          \_ /usr/bin/x11vnc -display :0 -forever -shared -nopw
+android+       8       1  0 10:26 ?        00:00:00 /usr/bin/python3 /usr/bin/supervisord --configuration /home/androidusr/docker-android/mixins/configs/process/supervisord-port.conf
+android+      13       8  0 10:26 ?        00:00:00  \_ /usr/bin/python3 /usr/local/bin/docker-android start port_forwarder
+android+      29      13  0 10:26 ?        00:00:00      \_ /bin/sh -c /usr/bin/socat tcp-listen:5554,bind=172.17.0.2,fork tcp:127.0.0.1:5554 & /usr/bin/socat tcp-listen:5555,bind=172.17.0.2,fork tcp:127.0.0.1:5555 
+android+      31      29  0 10:26 ?        00:00:00          \_ /usr/bin/socat tcp-listen:5554,bind=172.17.0.2,fork tcp:127.0.0.1:5554
+android+      32      29  0 10:26 ?        00:00:00          \_ /usr/bin/socat tcp-listen:5555,bind=172.17.0.2,fork tcp:127.0.0.1:5555
+android+       9       1  0 10:26 ?        00:00:00 /usr/bin/python3 /usr/bin/supervisord --configuration /home/androidusr/docker-android/mixins/configs/process/supervisord-base.conf
+android+      16       9  0 10:26 ?        00:00:00  \_ /usr/bin/python3 /usr/local/bin/docker-android start device
+android+     141      16 32 10:26 ?        00:23:51      \_ /opt/android/emulator/qemu/linux-x86_64/qemu-system-x86_64 @samsung_galaxy_s9_10.0 -gpu swiftshader_indirect -accel on -writable-system -verbose
+android+     413     141  0 10:28 ?        00:00:00          \_ [adb] <defunct>
+android+     440     141  0 10:28 ?        00:00:00          \_ [adb] <defunct>
+android+     449     141  0 10:28 ?        00:00:00          \_ [adb] <defunct>
+android+     146       1  0 10:26 ?        00:00:00 /opt/android/emulator/crashpad_handler --no-rate-limit --database=/tmp/android-unknown/emu-crash.db --url=https://clients2.google.com/cr/report --annotation=prod=AndroidEmulator --annotation=ver=32.1.14-10330179 --initial-client-fd=5 --shared-client-connection
+android+     156       1  0 10:26 ?        00:00:00 adb -L tcp:5037 fork-server server --reply-fd 4
